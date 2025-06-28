@@ -28,7 +28,7 @@ function Home() {
   
     try {
       const response = await axios.get(
-        `https://4988-2409-40f4-204d-193d-88da-4383-e1f5-89b7.ngrok-free.app/api/courses?topic=${encodeURIComponent(query)}&limit=100&skip=0`,
+        ` https://cce2-2409-40f4-2117-8442-8dff-23-522a-b1ff.ngrok-free.app/api/courses?topic=${encodeURIComponent(query)}&limit=100&skip=0`,
         {
           headers: {
             'ngrok-skip-browser-warning': 'true'
