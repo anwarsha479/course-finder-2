@@ -85,6 +85,21 @@ function Home() {
       ? courses
       : courses.filter(course => course.provider.toLowerCase() === platformFilter.toLowerCase());
 
+  // ✅ Start Exploring Scroll Handler
+  const handleStartExploring = () => {
+    const searchInput = document.getElementById('mainSearchInput');
+    if (searchInput) {
+      window.location.hash = '#search'; // update the URL
+      searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        searchInput.focus();
+        // Add glow effect
+        searchInput.classList.add('ring-4', 'ring-indigo-500', 'transition');
+        setTimeout(() => searchInput.classList.remove('ring-4', 'ring-indigo-500'), 1500);
+      }, 600);
+    }
+  };
+
   return (
     <div className="bg-[#0f172a] min-h-screen text-white font-sans">
 
@@ -100,7 +115,7 @@ function Home() {
         </div>
 
         {/* Search Box */}
-        <div className="relative w-full md:max-w-4xl md:ml-8 mx-auto">
+        <div className="relative w-full md:max-w-4xl md:ml-8 mx-auto" id="search">
           <input
             type="text"
             id="mainSearchInput"
@@ -178,13 +193,7 @@ function Home() {
           {/* Start Exploring Button */}
           <div className="flex justify-center mt-12">
             <button
-              onClick={() => {
-                const searchInput = document.getElementById('mainSearchInput');
-                if (searchInput) {
-                  searchInput.scrollIntoView({ behavior: 'smooth' });
-                  setTimeout(() => searchInput.focus(), 600);
-                }
-              }}
+              onClick={handleStartExploring}
               className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition text-lg"
             >
               Start Exploring
@@ -194,7 +203,7 @@ function Home() {
       )}
 
       {/* Course Results Section */}
-      <div className="p-6 max-w-6xl mx-auto" id="search">
+      <div className="p-6 max-w-6xl mx-auto">
         <p className="text-center text-gray-300 mt-4 text-lg">
           Discover and compare top-rated courses across leading platforms like Coursera, YouTube, and more.
         </p>
