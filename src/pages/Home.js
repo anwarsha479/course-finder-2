@@ -24,20 +24,18 @@ function Home() {
     setLoading(true);
     setError('');
     
-    console.log('🚀 Making request to fetch courses for:', query); // Added console log
-  
+    console.log('🚀 Making request to fetch courses for:', query);
+
     try {
       const response = await axios.get(
-        `     https://a7c01a89d657.ngrok-free.app/api/courses?topic=${encodeURIComponent(query)}&limit=100&skip=0`,
+        `https://a7c01a89d657.ngrok-free.app/api/courses?topic=${encodeURIComponent(query)}&limit=100&skip=0`,
         {
-          headers: {
-            'ngrok-skip-browser-warning': 'true'
-          }
+          headers: { 'ngrok-skip-browser-warning': 'true' }
         }
       );
-  
-      console.log('✅ Response received:', response.data); // Added console log
-  
+
+      console.log('✅ Response received:', response.data);
+
       if (response.data && Array.isArray(response.data.courses)) {
         const sorted = response.data.courses.sort((a, b) => {
           const aScore = (a.rating || 0) * (a.reviews_count || 0);
@@ -58,7 +56,6 @@ function Home() {
       setLoading(false);
     }
   };
-  
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') handleSearch();
@@ -74,15 +71,19 @@ function Home() {
     const emptyStars = 5 - fullStars - halfStars;
 
     let stars = [];
-    for (let i = 0; i < fullStars; i++) stars.push(<img src={fullStar} alt="Full Star" className="w-5 h-5" key={`full-${i}`} />);
-    for (let i = 0; i < halfStars; i++) stars.push(<img src={halfStar} alt="Half Star" className="w-5 h-5" key={`half-${i}`} />);
-    for (let i = 0; i < emptyStars; i++) stars.push(<img src={fullStar} alt="Empty Star" className="w-5 h-5 opacity-30" key={`empty-${i}`} />);
+    for (let i = 0; i < fullStars; i++)
+      stars.push(<img src={fullStar} alt="Full Star" className="w-5 h-5" key={`full-${i}`} />);
+    for (let i = 0; i < halfStars; i++)
+      stars.push(<img src={halfStar} alt="Half Star" className="w-5 h-5" key={`half-${i}`} />);
+    for (let i = 0; i < emptyStars; i++)
+      stars.push(<img src={fullStar} alt="Empty Star" className="w-5 h-5 opacity-30" key={`empty-${i}`} />);
     return stars;
   };
 
-  const filteredCourses = platformFilter === 'All'
-    ? courses
-    : courses.filter(course => course.provider.toLowerCase() === platformFilter.toLowerCase());
+  const filteredCourses =
+    platformFilter === 'All'
+      ? courses
+      : courses.filter(course => course.provider.toLowerCase() === platformFilter.toLowerCase());
 
   return (
     <div className="bg-[#0f172a] min-h-screen text-white font-sans">
@@ -102,6 +103,7 @@ function Home() {
         <div className="relative w-full md:max-w-4xl md:ml-8 mx-auto">
           <input
             type="text"
+            id="mainSearchInput"
             placeholder="Search courses (e.g. Python, Web Dev, AI)"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -173,17 +175,23 @@ function Home() {
             </div>
           </div>
 
-         <div className="flex justify-center mt-12">
-  <button
-    onClick={() => {
-      const element = document.getElementById("search");
-      if (element) element.scrollIntoView({ behavior: "smooth" });
-    }}
-    className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition text-lg"
-  >
-    Start Exploring
-  </button>
-</div>
+          {/* Start Exploring Button */}
+          <div className="flex justify-center mt-12">
+            <button
+              onClick={() => {
+                const searchInput = document.getElementById('mainSearchInput');
+                if (searchInput) {
+                  searchInput.scrollIntoView({ behavior: 'smooth' });
+                  setTimeout(() => searchInput.focus(), 600);
+                }
+              }}
+              className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition text-lg"
+            >
+              Start Exploring
+            </button>
+          </div>
+        </section>
+      )}
 
       {/* Course Results Section */}
       <div className="p-6 max-w-6xl mx-auto" id="search">
@@ -233,7 +241,7 @@ function Home() {
           </div>
         )}
 
-{visibleCount < filteredCourses.length && (
+        {visibleCount < filteredCourses.length && (
           <div className="text-center mt-10">
             <button
               onClick={handleShowMore}
