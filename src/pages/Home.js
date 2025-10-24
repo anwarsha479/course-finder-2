@@ -173,13 +173,17 @@ function Home() {
             </div>
           </div>
 
-          <div className="flex justify-center mt-12">
-            <a href="#search" className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition text-lg">
-              Start Exploring
-            </a>
-          </div>
-        </section>
-      )}
+         <div className="flex justify-center mt-12">
+  <button
+    onClick={() => {
+      const element = document.getElementById("search");
+      if (element) element.scrollIntoView({ behavior: "smooth" });
+    }}
+    className="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition text-lg"
+  >
+    Start Exploring
+  </button>
+</div>
 
       {/* Course Results Section */}
       <div className="p-6 max-w-6xl mx-auto" id="search">
